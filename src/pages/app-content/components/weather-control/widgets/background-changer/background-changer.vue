@@ -32,7 +32,7 @@ const changeBackgroundImage = () => {
 </script>
 
 <template>
-<div class="changer" :onclick="changeBackgroundImage">
+<div class="changer" @click="changeBackgroundImage">
   <RefreshSvg class="changer__svg" :class="{'changer__svg_spin': isSpinAnimationActive}"/>
 </div>
 </template>
@@ -51,7 +51,7 @@ const changeBackgroundImage = () => {
 }
 
 .changer:hover {
-  background-color: var( --bg-color-hover);
+  background-color: var(--bg-color-hover);
 }
 
 @keyframes rotate360 {
