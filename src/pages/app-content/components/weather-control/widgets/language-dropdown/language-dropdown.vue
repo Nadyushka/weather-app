@@ -7,31 +7,41 @@ import {
 } from "./models";
 
 /**
+ * * Варианты выбора в дропдауне
+ */
+const langOptions:LangOptionModel[]  = [
+  new LangOptionModel({Id: 0, Language: 'en'}),
+  new LangOptionModel({Id: 1, Language: 'ru'}),
+  new LangOptionModel({Id: 2, Language: 'by'})
+]
+
+/**
  * * Видны ли опции для выбора дропдауна
  */
 const isOptionsVisible = ref(false)
-
-const langOptions:LangOptionModel[]  = [
-    new LangOptionModel({Id: 0, Language: 'en'}),
-    new LangOptionModel({Id: 1, Language: 'ru'}),
-    new LangOptionModel({Id: 2, Language: 'by'})
-]
-
+/**
+ * * Выбранный язык
+ */
 const activeLanguage = ref<'en' | 'ru' | 'by'>('en')
 
+/**
+ * Выбрать язык
+ * @param value
+ */
 const setActiveLanguage = (value: 'en' | 'ru' | 'by') => {
   activeLanguage.value = value
 }
-
-
-const toggleOptions = () => {
+/**
+ * * Переключатель видимости дропдауна
+ */
+const toggleOptionsVisibility = () => {
   isOptionsVisible.value = !isOptionsVisible.value
 }
 </script>
 
 <template>
   <div class="dropdown">
-    <div class="dropdown__value" @click="toggleOptions">
+    <div class="dropdown__value" @click="toggleOptionsVisibility">
       <div class="dropdown__language"> {{ activeLanguage }}</div>
       <DropdownArrow class="dropdown__icon" :class="[isOptionsVisible ? 'dropdown__icon_open' : 'dropdown__icon_close']"/>
     </div>
@@ -65,6 +75,7 @@ const toggleOptions = () => {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: 0.5s all;
 }
 
 .dropdown__language {
@@ -100,7 +111,7 @@ const toggleOptions = () => {
   transition: 0.4s all;
 }
 
-
+.dropdown__value:hover,
 .dropdown__option_active,
 .dropdown__option:hover{
   background-color: var(--bg-color-hover);

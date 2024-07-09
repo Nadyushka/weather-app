@@ -27,6 +27,9 @@
   --ff-semi-bold: 'Montserrat-SemiBold', sans-serif;
   --ff-bold: 'Montserrat-Bold', sans-serif;
 }
+* {
+  box-sizing: border-box;
+}
 
 body {
   transition: 0.5s all;
