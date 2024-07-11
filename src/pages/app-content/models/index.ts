@@ -1,3 +1,4 @@
 export * from './UserModel'
-export * from './PersonDescriptionBlockModel'
+export * from './DateModel'
+export * from './LocationModel'
 

@@ -78,6 +78,10 @@ const toggleOptionsVisibility = () => {
   transition: 0.5s all;
 }
 
+.dropdown__value:hover{
+  background-color: var(--bg-color-hover);
+}
+
 .dropdown__language {
   margin-right: 6px;
 }
@@ -104,19 +108,17 @@ const toggleOptionsVisibility = () => {
   width: 71px;
   height: 44px;
   cursor: pointer;
-  background-color: var(--btn-background);
+  background-color: rgba(174, 181, 185);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: 0.4s all;
 }
 
-.dropdown__value:hover,
 .dropdown__option_active,
-.dropdown__option:hover{
-  background-color: var(--bg-color-hover);
+.dropdown__option:hover {
+  background-color: rgba(76, 82, 85);
 }
-
 
 .dropdown__icon {
   transition: transform 0.5s;

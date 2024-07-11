@@ -1,2 +1,1 @@
-export * from './monthsNames'
-export * from './weekDays'
+export * from './extensions'
