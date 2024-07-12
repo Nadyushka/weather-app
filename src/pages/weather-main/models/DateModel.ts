@@ -7,7 +7,7 @@ export class DateModel {
     Month!: string
     Day!: number
 
-    constructor (obj: Partial<DateModel>) {
+    constructor (obj?: Partial<DateModel>) {
         Object.assign(this, obj)
     }
 }

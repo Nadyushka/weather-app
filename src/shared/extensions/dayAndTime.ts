@@ -1,4 +1,14 @@
-import {dayShortNamesBy, dayShortNamesEn, dayShortNamesRu, monthNamesBy, monthNamesEn, monthNamesRu} from "@/shared";
+import {
+    dayLongNamesBy,
+    dayLongNamesEn,
+    dayLongNamesRu,
+    dayShortNamesBy,
+    dayShortNamesEn,
+    dayShortNamesRu,
+    monthNamesBy,
+    monthNamesEn,
+    monthNamesRu
+} from "@/shared";
 import {DateModel} from "@/pages";
 
 export const  getCurrentTime = () => {
@@ -36,6 +46,24 @@ export const getToday = (language: 'ru' | 'en' | 'by'): DateModel => {
                 Month: monthNamesBy[monthNumber],
                 Day: dayToday.getDate()
             })
+        }
+    }
+}
+
+export const getLongDayOfWeek = (language: 'ru' | 'en' | 'by', idx: number): string => {
+    const todayDayOfWeek = new Date().getDay()
+    const nextDayValue =  (todayDayOfWeek + idx + 1) % 7
+
+
+    switch (language) {
+        case 'ru': {
+            return dayLongNamesRu[nextDayValue]
+        }
+        case 'en': {
+            return dayLongNamesEn[nextDayValue]
+        }
+        case 'by': {
+            return dayLongNamesBy[nextDayValue]
         }
     }
 }

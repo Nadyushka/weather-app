@@ -1,1 +1,1 @@
-export * from "./app-content"
+export * from "./weather-main"
