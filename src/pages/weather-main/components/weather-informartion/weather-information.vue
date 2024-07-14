@@ -8,7 +8,7 @@ import {
   LocationModel,
   WeatherForecastModel, FutureWeatherForecastModel
 } from "@/pages";
-import {onBeforeUnmount, onMounted, ref} from "vue";
+import {onBeforeUnmount, onMounted, ref, watch, provide, Ref} from "vue";
 import {getCurrentTime, getToday} from "@/shared";
 
 /**
@@ -30,10 +30,10 @@ let timer
  * * После монтирования компонента
  */
 onMounted(() => {
-  currentTime.value = getCurrentTime()
+  getTime()
   today.value = getToday('en')
 
-  timer = setInterval(() =>  getCurrentTime(), 1000)
+  timer = setInterval(() =>  getTime(), 1000)
 })
 /**
  * * До размонтирования компонента
@@ -43,7 +43,7 @@ onBeforeUnmount(() => clearInterval(timer))
 /**
  * * Получить актуальное время
  */
-const getCurrentTime = () => currentTime.value = getCurrentTime()
+const getTime = () => currentTime.value = getCurrentTime()
 
 const todayForecast = ref(new WeatherForecastModel({
   Temperature: '10',
@@ -68,6 +68,23 @@ const futureForecast = ref([
     WeatherIcon: './overcast-icon.svg',
   })
 ])
+
+const activeLanguage = ref<'en' | 'ru' | 'by'>('en')
+
+const setActiveLanguage = (event: CustomEvent<{ activeLanguage: 'en' | 'ru' | 'by' }>) => {
+  activeLanguage.value = event.detail.activeLanguage
+}
+
+document.addEventListener('set-active-language', setActiveLanguage)
+
+provide<Ref<'en' | 'ru' | 'by'>>('activeLanguage', activeLanguage)
+
+watch(
+    () => activeLanguage.value,
+    () => {
+      today.value = getToday(activeLanguage.value)
+    }
+)
 </script>
 
 <template>

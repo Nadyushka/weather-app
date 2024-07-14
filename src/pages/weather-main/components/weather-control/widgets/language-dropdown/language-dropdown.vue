@@ -30,6 +30,13 @@ const activeLanguage = ref<'en' | 'ru' | 'by'>('en')
  */
 const setActiveLanguage = (value: 'en' | 'ru' | 'by') => {
   activeLanguage.value = value
+  document.dispatchEvent(new CustomEvent(
+      'set-active-language', {
+      detail: {
+        activeLanguage: value
+  }
+      })
+)
 }
 /**
  * * Переключатель видимости дропдауна

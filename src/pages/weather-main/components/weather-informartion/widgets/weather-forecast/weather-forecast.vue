@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, PropType, ref} from "vue";
+import {computed, PropType, ref, inject, Ref} from "vue";
 import {FutureWeatherForecastModel, WeatherForecastModel} from "@/pages";
 import CircleSvg from "@/assets/images/svg/circle.svg"
 import {getLongDayOfWeek} from "@/shared";
@@ -36,11 +36,6 @@ const props = defineProps({
   }
 })
 
-/**
- * * Выбранный язык
- */
-const activeLanguage = ref<'en' | 'ru' | 'by'>('en')
-
 const futureForecastWithDayOfWeek = computed<FutureWeatherForecastModel>(()=> {
 return props.futureForecast.map((day, idx) =>
     new FutureWeatherForecastModel( {
@@ -49,6 +44,9 @@ return props.futureForecast.map((day, idx) =>
 } ))
 })
 
+const language = inject<Ref<'en' | 'ru' | 'by'>>('activeLanguage')
+
+const activeLanguage = computed(() => language.value ?? 'en')
 </script>
 
 <template>

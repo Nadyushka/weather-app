@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import MicrophoneSvg from "@/assets/images/svg/microphone-svg.svg"
-import {ref} from "vue";
+import {computed, inject, provide, Ref, ref, watch} from "vue";
 
 /** Значение города для поиска погоды */
 const searchValue = ref()
@@ -18,7 +18,9 @@ const translate = {
   },
 }
 
-const activeLanguage = ref('en')
+const language = inject<Ref<'en' | 'ru' | 'by'>>('activeLanguage')
+
+const activeLanguage = computed(() => language.value ?? 'en')
 
 </script>
 
