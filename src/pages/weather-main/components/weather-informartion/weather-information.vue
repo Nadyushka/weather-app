@@ -104,4 +104,8 @@ watch(
   display: flex;
   justify-content: space-between;
 }
+
+.info__map {
+  align-self: flex-end;
+}
 </style>

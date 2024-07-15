@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "mapbox-gl": "^3.5.1",
     "normalize.css": "^8.0.1",
     "vue": "^3.4.21",
     "vue-router": "4.2.2"
