@@ -1,10 +1,20 @@
 <script lang="ts" setup>
 
-import { WeatherControl, WeatherInformation } from "@/pages";
+import {AdapterService, WeatherControl, WeatherInformation} from "@/pages";
+import {computed, onBeforeMount} from "vue";
+
+const adapterService = AdapterService.getInstance()
+
+onBeforeMount(async () => {
+  await adapterService.getLocation()
+})
+
+const isLoading = computed(() => adapterService.IsLoading.value)
 </script>
 
 <template>
-  <main class="content">
+  <div v-if="isLoading" class="loader">Loading ...</div>
+  <main v-else class="content">
     <div class="content__background_transparent">
    <div class="content__wrapper">
      <weather-control/>
@@ -15,6 +25,17 @@ import { WeatherControl, WeatherInformation } from "@/pages";
 </template>
 
 <style scoped lang="scss">
+.loader {
+  position: fixed;
+  width: 100vw;
+  min-height: 100dvh;
+  text-align: center;
+  background-image: linear-gradient(to bottom, rgba(8, 15, 26, 0.80) 0%, rgba(17, 17, 46, 0.80)  100%);
+  color: var(--font-color-main);
+  z-index: 10000;
+}
+
+
 .content {
   width: 100vw;
   min-height: 100dvh;

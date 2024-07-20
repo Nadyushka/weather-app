@@ -7,9 +7,9 @@ const searchValue = ref()
 
 const translate = {
   Placeholder: {
-    en: 'Search city or ZIP',
-    ru: 'Искать город или индекс',
-    by: 'Пошук горада або індэкс'
+    en: 'Сity search',
+    ru: 'Поиск город',
+    by: 'Пошук горада'
   },
   ButtonText: {
     en: 'SEARCH',

@@ -5,6 +5,9 @@ import {ref} from "vue";
 import {
   LangOptionModel
 } from "./models";
+import {AdapterService} from "@/pages";
+
+const adapterService = AdapterService.getInstance()
 
 /**
  * * Варианты выбора в дропдауне
@@ -28,7 +31,7 @@ const activeLanguage = ref<'en' | 'ru' | 'by'>('en')
  * Выбрать язык
  * @param value
  */
-const setActiveLanguage = (value: 'en' | 'ru' | 'by') => {
+const setActiveLanguage = async (value: 'en' | 'ru' | 'by') => {
   activeLanguage.value = value
   document.dispatchEvent(new CustomEvent(
       'set-active-language', {
@@ -37,6 +40,7 @@ const setActiveLanguage = (value: 'en' | 'ru' | 'by') => {
   }
       })
 )
+  adapterService.CurrentLanguage = value
 }
 /**
  * * Переключатель видимости дропдауна
@@ -115,7 +119,7 @@ const toggleOptionsVisibility = () => {
   width: 71px;
   height: 44px;
   cursor: pointer;
-  background-color: rgba(174, 181, 185);
+  background-color: rgba(76, 82, 85) ;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,7 +128,7 @@ const toggleOptionsVisibility = () => {
 
 .dropdown__option_active,
 .dropdown__option:hover {
-  background-color: rgba(76, 82, 85);
+  background-color: rgba(174, 181, 185);
 }
 
 .dropdown__icon {

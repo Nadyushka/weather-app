@@ -8,8 +8,12 @@ import {
   LocationModel,
   WeatherForecastModel, FutureWeatherForecastModel
 } from "@/pages";
-import {onBeforeUnmount, onMounted, ref, watch, provide, Ref} from "vue";
+import {onBeforeUnmount, onMounted, ref, watch, provide, Ref, computed} from "vue";
 import {getCurrentTime, getToday} from "@/shared";
+
+import {AdapterService} from "@/pages";
+
+const adapterService = AdapterService.getInstance()
 
 /**
  * * Текущее время
@@ -22,7 +26,8 @@ const today = ref<DateModel>(new DateModel())
 /**
  * * Текущее местополодение пользователя
  */
-const location = ref(new LocationModel({Country: 'Belarus', City: 'Minsk'}))
+const location = computed(() =>
+    new LocationModel({ Country: adapterService.Country.value, City: adapterService.City.value }))
 
 let timer
 
