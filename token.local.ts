@@ -1,1 +1,0 @@
-export const MAP_API = 'pk.eyJ1IjoibmFkemV5YS1iYXJhbmF2YSIsImEiOiJjbHluYXcybmUwM3o2MmpzNHB4MnhldDh5In0.GufKW2_OnKORkepYmUENGQ'
