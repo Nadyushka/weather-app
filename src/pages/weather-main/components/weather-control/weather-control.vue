@@ -3,16 +3,17 @@
 import { BackgroundChanger, LanguageDropdown, TemperatureToggler, SearchInput }
   from "@/pages";
 import { provide, Ref, ref} from "vue";
+import { LanguagesEnum } from '@/pages'
 
-const activeLanguage = ref<'en' | 'ru' | 'by'>('en')
+const activeLanguage = ref<LanguagesEnum>( LanguagesEnum.English)
 
-const setActiveLanguage = (event: CustomEvent<{ activeLanguage: 'en' | 'ru' | 'by' }>) => {
+const setActiveLanguage = (event: CustomEvent<{ activeLanguage: LanguagesEnum }>) => {
   activeLanguage.value = event.detail.activeLanguage
 }
 
 document.addEventListener('set-active-language', setActiveLanguage)
 
-provide<Ref<'en' | 'ru' | 'by'>>('activeLanguage', activeLanguage)
+provide<Ref<LanguagesEnum>>('activeLanguage', activeLanguage)
 </script>
 
 <template>

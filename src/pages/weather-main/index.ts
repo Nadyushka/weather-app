@@ -1,4 +1,4 @@
-import AppContent from './app-content.vue'
+import AppContent from './weather-main.vue'
 export { AppContent }
 
 export * from './components'

@@ -1,27 +1,37 @@
 <script setup lang="ts">
 import MicrophoneSvg from "@/assets/images/svg/microphone-svg.svg"
 import {computed, inject, provide, Ref, ref, watch} from "vue";
+import {AdapterService} from "@/pages";
+import { LanguagesEnum } from "@/pages"
+
+const adapterService = AdapterService.getInstance()
 
 /** Значение города для поиска погоды */
-const searchValue = ref()
+const searchValue = ref<string>()
 
 const translate = {
   Placeholder: {
     en: 'Сity search',
     ru: 'Поиск город',
-    by: 'Пошук горада'
+    by: 'Пошук горада',
+	 de: 'Stadtsuche'
   },
   ButtonText: {
     en: 'SEARCH',
     ru: 'ИСКАТЬ',
-    by: 'ПОШУК'
+    by: 'ПОШУК',
+	de: 'SUCHEN'
   },
 }
 
-const language = inject<Ref<'en' | 'ru' | 'by'>>('activeLanguage')
+const language = inject<Ref<LanguagesEnum>>('activeLanguage')
 
-const activeLanguage = computed(() => language.value ?? 'en')
+const activeLanguage = computed(() => language.value ?? LanguagesEnum.English)
 
+const searchCityInfo = async () => {
+  adapterService.SearchCity = searchValue.value
+  await adapterService.getLocationWithSearchCity(searchValue.value)
+}
 </script>
 
 <template>
@@ -30,7 +40,7 @@ const activeLanguage = computed(() => language.value ?? 'en')
       <input v-model="searchValue" class="input__body" :placeholder="translate.Placeholder[activeLanguage]"/>
       <MicrophoneSvg class="input__microphone"/>
     </div>
-    <button class="input__button"> {{translate.ButtonText[activeLanguage]}} </button>
+    <button class="input__button" @click="searchCityInfo"> {{translate.ButtonText[activeLanguage]}} </button>
   </div>
 </template>
 

@@ -1,15 +1,18 @@
 import {
+	dayLongNamesDe,
     dayLongNamesBy,
     dayLongNamesEn,
     dayLongNamesRu,
+	 dayShortNamesDe,
     dayShortNamesBy,
     dayShortNamesEn,
     dayShortNamesRu,
+	 monthNamesDe,
     monthNamesBy,
     monthNamesEn,
     monthNamesRu
 } from "@/shared";
-import {DateModel} from "@/pages";
+import {DateModel, LanguagesEnum} from "@/pages";
 
 export const  getCurrentTime = () => {
     const dayToday = new Date()
@@ -20,50 +23,50 @@ export const  getCurrentTime = () => {
     return `${hours}:${minutes}:${seconds}`
 }
 
-export const getToday = (language: 'ru' | 'en' | 'by'): DateModel => {
+export const getToday = (language: LanguagesEnum): DateModel => {
     const dayToday = new Date()
     const dayOfWeekNumber = dayToday.getDay()
     const monthNumber = dayToday.getMonth()
 
     switch (language) {
-        case 'ru': {
+        case LanguagesEnum.Russian: {
             return new DateModel({
                 DayOfWeek: dayShortNamesRu[dayOfWeekNumber],
                 Month: monthNamesRu[monthNumber],
                 Day: dayToday.getDate()
             })
         }
-        case 'en': {
+        case LanguagesEnum.English: {
             return new DateModel({
                 DayOfWeek: dayShortNamesEn[dayOfWeekNumber],
                 Month: monthNamesEn[monthNumber],
                 Day: dayToday.getDate()
             })
         }
-        case 'by': {
+        case LanguagesEnum.Deutsch: {
             return new DateModel({
-                DayOfWeek: dayShortNamesBy[dayOfWeekNumber],
-                Month: monthNamesBy[monthNumber],
+                DayOfWeek: dayShortNamesDe[dayOfWeekNumber],
+                Month: monthNamesDe[monthNumber],
                 Day: dayToday.getDate()
             })
         }
     }
 }
 
-export const getLongDayOfWeek = (language: 'ru' | 'en' | 'by', idx: number): string => {
+export const getLongDayOfWeek = (language: LanguagesEnum, idx: number): string => {
     const todayDayOfWeek = new Date().getDay()
     const nextDayValue =  (todayDayOfWeek + idx + 1) % 7
 
 
     switch (language) {
-        case 'ru': {
+        case LanguagesEnum.Russian: {
             return dayLongNamesRu[nextDayValue]
         }
-        case 'en': {
+        case LanguagesEnum.English: {
             return dayLongNamesEn[nextDayValue]
         }
-        case 'by': {
-            return dayLongNamesBy[nextDayValue]
+        case LanguagesEnum.Deutsch: {
+            return dayLongNamesDe[nextDayValue]
         }
     }
 }

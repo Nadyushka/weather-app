@@ -6,7 +6,8 @@ import {
   MapLocation,
   DateModel,
   LocationModel,
-  WeatherForecastModel, FutureWeatherForecastModel
+  WeatherForecastModel,
+  LanguagesEnum
 } from "@/pages";
 import {onBeforeUnmount, onMounted, ref, watch, provide, Ref, computed} from "vue";
 import {getCurrentTime, getToday} from "@/shared";
@@ -36,7 +37,7 @@ let timer
  */
 onMounted(() => {
   getTime()
-  today.value = getToday('en')
+  today.value = getToday(LanguagesEnum.English)
 
   timer = setInterval(() =>  getTime(), 1000)
 })
@@ -74,15 +75,15 @@ const futureForecast = ref([
   })
 ])
 
-const activeLanguage = ref<'en' | 'ru' | 'by'>('en')
+const activeLanguage = ref<LanguagesEnum>(LanguagesEnum.English)
 
-const setActiveLanguage = (event: CustomEvent<{ activeLanguage: 'en' | 'ru' | 'by' }>) => {
+const setActiveLanguage = (event: CustomEvent<{ activeLanguage: LanguagesEnum }>) => {
   activeLanguage.value = event.detail.activeLanguage
 }
 
 document.addEventListener('set-active-language', setActiveLanguage)
 
-provide<Ref<'en' | 'ru' | 'by'>>('activeLanguage', activeLanguage)
+provide<Ref<LanguagesEnum>>('activeLanguage', activeLanguage)
 
 watch(
     () => activeLanguage.value,

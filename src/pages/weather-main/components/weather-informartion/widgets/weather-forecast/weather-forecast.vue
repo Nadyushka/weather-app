@@ -1,26 +1,33 @@
 <script setup lang="ts">
-import {computed, PropType, ref, inject, Ref} from "vue";
-import {FutureWeatherForecastModel, WeatherForecastModel} from "@/pages";
-import CircleSvg from "@/assets/images/svg/circle.svg"
-import {getLongDayOfWeek} from "@/shared";
+import { computed, PropType, ref, inject, Ref } from "vue";
+import {
+  FutureWeatherForecastModel,
+  WeatherForecastModel,
+  LanguagesEnum,
+} from "@/pages";
+import CircleSvg from "@/assets/images/svg/circle.svg";
+import { getLongDayOfWeek } from "@/shared";
 
 const translate = {
   Feelslike: {
-    en: 'Feels like',
-    ru: 'Ощущается',
-    by: 'Адчуваецца'
+    en: "Feels like",
+    ru: "Ощущается",
+    by: "Адчуваецца",
+    de: "Fühlt sich an wie",
   },
   Wind: {
-    en: 'Wind',
-    ru: 'Ветер',
-    by: 'Вецер'
+    en: "Wind",
+    ru: "Ветер",
+    by: "Вецер",
+    de: "Wind",
   },
   Humidity: {
-    en: 'Humidity',
-    ru: 'Влажность',
-    by: 'Вільготнасць'
+    en: "Humidity",
+    ru: "Влажность",
+    by: "Вільготнасць",
+    de: "Feuchtigkeit",
   },
-}
+};
 
 /**
  * * Входящие пропсы
@@ -28,55 +35,82 @@ const translate = {
 const props = defineProps({
   todayForecast: {
     type: Object as PropType<WeatherForecastModel>,
-    required: true
+    required: true,
   },
   futureForecast: {
     type: Array as PropType<WeatherForecastModel[]>,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
-const futureForecastWithDayOfWeek = computed<FutureWeatherForecastModel>(()=> {
-return props.futureForecast.map((day, idx) =>
-    new FutureWeatherForecastModel( {
-  ...day,
-  DayOfWeek: getLongDayOfWeek(activeLanguage.value, idx )
-} ))
-})
+const futureForecastWithDayOfWeek = computed<FutureWeatherForecastModel>(() => {
+  return props.futureForecast.map(
+    (day, idx) =>
+      new FutureWeatherForecastModel({
+        ...day,
+        DayOfWeek: getLongDayOfWeek(activeLanguage.value, idx),
+      })
+  );
+});
 
-const language = inject<Ref<'en' | 'ru' | 'by'>>('activeLanguage')
+const language = inject<Ref<LanguagesEnum>>("activeLanguage");
 
-const activeLanguage = computed(() => language.value ?? 'en')
+const activeLanguage = computed(() => language.value ?? LanguagesEnum.English);
 </script>
 
 <template>
-<div class="forecast">
-<div class="forecast__today">
-  <div class="forecast__today-temperature"> {{props.todayForecast.Temperature}} </div>
-  <div class="forecast__today-weather">
-    <div class="forecast__item"> {{props.todayForecast.WeatherDescription }} </div>
-    <div class="forecast__item"> {{ translate.Feelslike[activeLanguage] }}: {{ props.todayForecast.Feelslike }} </div>
-    <div class="forecast__item"> {{ translate.Wind[activeLanguage] }}: {{ props.todayForecast.Wind }} </div>
-    <div class="forecast__item"> {{ translate.Humidity[activeLanguage] }}: {{ props.todayForecast.Humidity }} </div>
-  </div>
-  <CircleSvg class="forecast__today-weather-circle"/>
-  <img :src="props.todayForecast.WeatherIcon" alt="weather-icon" class="forecast__today-weather-icon"/>
-</div>
-  <div class="forecast__future">
-    <div v-for="dayWeather in futureForecastWithDayOfWeek" class="forecast__day">
-      <div class="forecast__day-of-week"> {{ dayWeather.DayOfWeek }}</div>
-      <div class="forecast__day-of-week-weather">
-        <div class="forecast__day-of-week-temperature"> {{ dayWeather.Temperature }} </div>
-        <img :src="dayWeather.WeatherIcon" alt="weather-icon" class="forecast__day-of-week-icon"/>
+  <div class="forecast">
+    <div class="forecast__today">
+      <div class="forecast__today-temperature">
+        {{ props.todayForecast.Temperature }}
+      </div>
+      <div class="forecast__today-weather">
+        <div class="forecast__item">
+          {{ props.todayForecast.WeatherDescription }}
+        </div>
+        <div class="forecast__item">
+          {{ translate.Feelslike[activeLanguage] }}:
+          {{ props.todayForecast.Feelslike }}
+        </div>
+        <div class="forecast__item">
+          {{ translate.Wind[activeLanguage] }}: {{ props.todayForecast.Wind }}
+        </div>
+        <div class="forecast__item">
+          {{ translate.Humidity[activeLanguage] }}:
+          {{ props.todayForecast.Humidity }}
+        </div>
+      </div>
+      <CircleSvg class="forecast__today-weather-circle" />
+      <img
+        :src="props.todayForecast.WeatherIcon"
+        alt="weather-icon"
+        class="forecast__today-weather-icon"
+      />
+    </div>
+    <div class="forecast__future">
+      <div
+        v-for="dayWeather in futureForecastWithDayOfWeek"
+        class="forecast__day"
+      >
+        <div class="forecast__day-of-week">{{ dayWeather.DayOfWeek }}</div>
+        <div class="forecast__day-of-week-weather">
+          <div class="forecast__day-of-week-temperature">
+            {{ dayWeather.Temperature }}
+          </div>
+          <img
+            :src="dayWeather.WeatherIcon"
+            alt="weather-icon"
+            class="forecast__day-of-week-icon"
+          />
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <style scoped lang="scss">
 .forecast {
-  width: 597px;
+  width: 607px;
 }
 
 .forecast__today {
@@ -98,7 +132,7 @@ const activeLanguage = computed(() => language.value ?? 'en')
   font-size: 306px;
   font-weight: var(--fw-bold);
   color: var(--font-color-main);
-  font-family: 'Montserrat-Bold', sans-serif;
+  font-family: "Montserrat-Bold", sans-serif;
   line-height: 1;
 }
 
@@ -120,7 +154,7 @@ const activeLanguage = computed(() => language.value ?? 'en')
   font-size: 22px;
   font-weight: var(--fw-bold);
   color: var(--font-color-main);
-  font-family: 'Montserrat-Bold', sans-serif;
+  font-family: "Montserrat-Bold", sans-serif;
   line-height: 137%;
 }
 
@@ -134,7 +168,7 @@ const activeLanguage = computed(() => language.value ?? 'en')
   font-size: 22px;
   font-weight: var(--fw-bold);
   color: var(--font-color-main);
-  font-family: 'Montserrat-Bold', sans-serif;
+  font-family: "Montserrat-Bold", sans-serif;
 }
 
 .forecast__day-of-week-weather {
@@ -147,7 +181,7 @@ const activeLanguage = computed(() => language.value ?? 'en')
   font-size: 80px;
   font-weight: var(--fw-semiBold);
   color: var(--font-color-main);
-  font-family: 'Montserrat-SemiBold', sans-serif;
+  font-family: "Montserrat-SemiBold", sans-serif;
 }
 
 .forecast__day-of-week-icon {

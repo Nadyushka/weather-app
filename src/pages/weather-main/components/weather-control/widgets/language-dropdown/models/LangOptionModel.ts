@@ -2,6 +2,8 @@
  * * Модель описывающая опции выбора языка
  */
 
+import { LanguagesEnum } from '@/pages'
+
 export class LangOptionModel {
     /**
      * * id языка
@@ -10,7 +12,7 @@ export class LangOptionModel {
     /**
      * * Язык
      */
-    Language!: 'en' | 'ru' | 'by'
+    Language!: LanguagesEnum
 
     constructor(obj?: Partial<LangOptionModel>) {
         Object.assign(this, obj)

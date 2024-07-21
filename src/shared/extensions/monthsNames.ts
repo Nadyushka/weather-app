@@ -12,3 +12,8 @@ export const monthNamesBy = [
     "Студзень", "Люты", "Сакавік", "Красавік", "Май", "Чэрвень",
     "Ліпень", "Жнівень", "Верасень", "Кастрычнік", "Лістапад", "Снежань"
 ];
+
+export const monthNamesDe = [
+	"Januar", "Februar", "März", "April", "Mai", "Juni",
+	"Juli", "August", "September", "Oktober", "November", "Dezember"
+	];

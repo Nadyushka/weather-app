@@ -5,7 +5,7 @@ import {ref} from "vue";
 import {
   LangOptionModel
 } from "./models";
-import {AdapterService} from "@/pages";
+import {AdapterService, LanguagesEnum} from "@/pages";
 
 const adapterService = AdapterService.getInstance()
 
@@ -13,9 +13,9 @@ const adapterService = AdapterService.getInstance()
  * * Варианты выбора в дропдауне
  */
 const langOptions:LangOptionModel[]  = [
-  new LangOptionModel({Id: 0, Language: 'en'}),
-  new LangOptionModel({Id: 1, Language: 'ru'}),
-  new LangOptionModel({Id: 2, Language: 'by'})
+  new LangOptionModel({Id: 0, Language: LanguagesEnum.English}),
+  new LangOptionModel({Id: 1, Language: LanguagesEnum.Russian }),
+  new LangOptionModel({Id: 2, Language: LanguagesEnum.Deutsch })
 ]
 
 /**
@@ -25,13 +25,13 @@ const isOptionsVisible = ref(false)
 /**
  * * Выбранный язык
  */
-const activeLanguage = ref<'en' | 'ru' | 'by'>('en')
+const activeLanguage = ref<LanguagesEnum>(LanguagesEnum.English)
 
 /**
  * Выбрать язык
  * @param value
  */
-const setActiveLanguage = async (value: 'en' | 'ru' | 'by') => {
+const setActiveLanguage = async (value: LanguagesEnum) => {
   activeLanguage.value = value
   document.dispatchEvent(new CustomEvent(
       'set-active-language', {
@@ -45,14 +45,31 @@ const setActiveLanguage = async (value: 'en' | 'ru' | 'by') => {
 /**
  * * Переключатель видимости дропдауна
  */
-const toggleOptionsVisibility = () => {
-  isOptionsVisible.value = !isOptionsVisible.value
+const toggleOptionsVisibility = (value: boolean) => {
+  isOptionsVisible.value = value
+  if (value) {
+    document.addEventListener('click', closeMenuOnClickOutside)
+  } else {
+    document.removeEventListener('click', closeMenuOnClickOutside)
+  }
+}
+/**
+ * Закрыть дропдаун при клике вне дропдауна
+ * @param event
+ */
+const closeMenuOnClickOutside = (event) => {
+  if (isOptionsVisible.value && event.target.closest('.dropdown')) return
+
+  if (isOptionsVisible.value && !event.target.closest('.dropdown')) {
+    isOptionsVisible.value = false
+    document.removeEventListener('click', closeMenuOnClickOutside)
+  }
 }
 </script>
 
 <template>
   <div class="dropdown">
-    <div class="dropdown__value" @click="toggleOptionsVisibility">
+    <div class="dropdown__value" @click="toggleOptionsVisibility(!isOptionsVisible)">
       <div class="dropdown__language"> {{ activeLanguage }}</div>
       <DropdownArrow class="dropdown__icon" :class="[isOptionsVisible ? 'dropdown__icon_open' : 'dropdown__icon_close']"/>
     </div>
