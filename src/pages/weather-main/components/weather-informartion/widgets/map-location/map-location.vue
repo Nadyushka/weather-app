@@ -2,6 +2,7 @@
 import mapboxgl from "mapbox-gl";
 import { computed, inject, nextTick, onMounted, Ref, ref, watch } from "vue";
 import {AdapterService, LanguagesEnum} from "@/pages";
+import {MAP_API} from "../../../../../../../token.local";
 
 const adapterService = AdapterService.getInstance();
 
@@ -24,8 +25,7 @@ watch(
 /** Инициализировать карту */
 const initMap = () => {
   console.log([+adapterService.Longitude.value, +adapterService.Latitude.value])
-  mapboxgl.accessToken =
-    "pk.eyJ1IjoibmFkemV5YS1iYXJhbmF2YSIsImEiOiJjbHluYXcybmUwM3o2MmpzNHB4MnhldDh5In0.GufKW2_OnKORkepYmUENGQ";
+  mapboxgl.accessToken = location.href.includes('localhost') ? MAP_API :  process.env.MAP_API;
   map.value = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/mapbox/streets-v11",

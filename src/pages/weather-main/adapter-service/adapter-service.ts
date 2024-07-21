@@ -62,8 +62,9 @@ export class AdapterService {
                     this.Longitude.value = res.longitude.toString()
                     this.Latitude.value = res.latitude.toString()
 
-                    this.IsLoading.value = false
                 })
+                .catch(e => console.log('getLocation', e))
+                .finally(() =>   this.IsLoading.value = false )
         })
     }
 
@@ -80,11 +81,13 @@ export class AdapterService {
     }
 
     async getLocationWithSearchCity (city: string) {
+        this.IsLoading.value = true
+
         return new Promise<string>(async (resolve) => {
             await fetch(`https://nominatim.openstreetmap.org/search?q=${city}&format=json&limit=1&accept-language=en&addressdetails=1`)
                 .then((res) => res.json())
                 .then(async (res) => {
-                    console.log(res)
+
                     const translatedCity = await this.getCityTranslation(res[0].name || res[0].address.city || res[0].address.state)
 
                     this.Country.value = new Intl.DisplayNames(this._CurrentLanguage, {type: "region"}).of(res[0].address.country_code.toUpperCase())
@@ -94,6 +97,8 @@ export class AdapterService {
 
                     this.IsLoading.value = false
                 })
+                .catch(e => console.log('getLocationWithSearchCity', e))
+                .finally(() =>   this.IsLoading.value = false )
         })
     }
 
