@@ -1,9 +1,8 @@
 <script setup lang="ts">
 
-import { BackgroundChanger, LanguageDropdown, TemperatureToggler, SearchInput }
+import { BackgroundChanger, LanguageDropdown, TemperatureToggler, SearchInput, LanguagesEnum }
   from "@/pages";
 import { provide, Ref, ref} from "vue";
-import { LanguagesEnum } from '@/pages'
 
 const activeLanguage = ref<LanguagesEnum>( LanguagesEnum.English)
 

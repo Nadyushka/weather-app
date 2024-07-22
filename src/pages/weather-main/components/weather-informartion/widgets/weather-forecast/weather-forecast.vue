@@ -7,6 +7,9 @@ import {
 } from "@/pages";
 import CircleSvg from "@/assets/images/svg/circle.svg";
 import { getLongDayOfWeek } from "@/shared";
+import {AdapterService} from "@/pages";
+
+const adapterService = AdapterService.getInstance()
 
 const translate = {
   Feelslike: {
@@ -20,6 +23,12 @@ const translate = {
     ru: "Ветер",
     by: "Вецер",
     de: "Wind",
+  },
+  WindSpeed: {
+    en: "m/s",
+    ru: "м/с",
+    by: "m/s",
+    de: "m/s",
   },
   Humidity: {
     en: "Humidity",
@@ -56,6 +65,8 @@ const futureForecastWithDayOfWeek = computed<FutureWeatherForecastModel>(() => {
 const language = inject<Ref<LanguagesEnum>>("activeLanguage");
 
 const activeLanguage = computed(() => language.value ?? LanguagesEnum.English);
+
+const temperatureType = computed(() => adapterService.TemperatureType)
 </script>
 
 <template>
@@ -70,10 +81,11 @@ const activeLanguage = computed(() => language.value ?? LanguagesEnum.English);
         </div>
         <div class="forecast__item">
           {{ translate.Feelslike[activeLanguage] }}:
-          {{ props.todayForecast.Feelslike }}
+          {{ props.todayForecast.Feelslike }} °{{temperatureType}}
         </div>
         <div class="forecast__item">
-          {{ translate.Wind[activeLanguage] }}: {{ props.todayForecast.Wind }}
+          {{ translate.Wind[activeLanguage] }}:
+          {{ props.todayForecast.Wind + ' ' + translate.WindSpeed[activeLanguage] }}
         </div>
         <div class="forecast__item">
           {{ translate.Humidity[activeLanguage] }}:
@@ -110,7 +122,7 @@ const activeLanguage = computed(() => language.value ?? LanguagesEnum.English);
 
 <style scoped lang="scss">
 .forecast {
-  width: 607px;
+  width: 730px;
 }
 
 .forecast__today {
@@ -119,6 +131,7 @@ const activeLanguage = computed(() => language.value ?? LanguagesEnum.English);
   justify-content: space-between;
   position: relative;
   z-index: 10;
+  margin-bottom: 16px;
 }
 
 .forecast__today-weather-circle {

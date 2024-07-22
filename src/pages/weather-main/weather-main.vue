@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { AdapterService, WeatherControl, WeatherInformation } from "@/pages";
-import { computed, onBeforeMount } from "vue";
-import Loader from "@/pages/weather-main/components/loader/loader.vue";
+import { AdapterService, WeatherControl, WeatherInformation, Loader } from "@/pages";
+import {computed, onBeforeMount, toRefs, watch} from "vue";
 
 const adapterService = AdapterService.getInstance();
 

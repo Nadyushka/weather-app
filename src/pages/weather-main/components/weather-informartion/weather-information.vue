@@ -51,29 +51,9 @@ onBeforeUnmount(() => clearInterval(timer))
  */
 const getTime = () => currentTime.value = getCurrentTime()
 
-const todayForecast = ref(new WeatherForecastModel({
-  Temperature: '10',
-  Feelslike: '10°',
-  WeatherDescription: 'Overcast',
-  Wind: '7 m/s',
-  Humidity: '83%',
-  WeatherIcon: './overcast-icon.svg'
-}))
+const todayForecast = computed( () => adapterService.TodayForecast.value)
 
-const futureForecast = ref([
-    new WeatherForecastModel({
-      Temperature: '7°',
-      WeatherIcon: './cloudy-icon.svg',
-    }),
-  new WeatherForecastModel({
-    Temperature: '6°',
-    WeatherIcon: './overcast-icon.svg',
-  }),
-  new WeatherForecastModel({
-    Temperature: '3°',
-    WeatherIcon: './overcast-icon.svg',
-  })
-])
+const futureForecast = computed( () => adapterService.FutureForecast.value)
 
 const activeLanguage = ref<LanguagesEnum>(LanguagesEnum.English)
 

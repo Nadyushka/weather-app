@@ -24,7 +24,6 @@ watch(
 
 /** Инициализировать карту */
 const initMap = () => {
-  console.log([+adapterService.Longitude.value, +adapterService.Latitude.value])
   mapboxgl.accessToken = location.href.includes('localhost') ? MAP_API :  process.env.MAP_API;
   map.value = new mapboxgl.Map({
     container: "map",
@@ -60,21 +59,17 @@ const updateMap = () => {
 
 /** Широта */
 const shownLatitude = computed(() =>
-  adapterService.Latitude.value
-    ? `${adapterService.Latitude.value?.slice(
+  `${adapterService.Latitude.value?.slice(
         0,
         2
       )}°${adapterService.Latitude.value?.slice(3, 5)}'`
-    : `0°0'`
 );
 /** Долгота */
 const shownLongitude = computed(() =>
-  adapterService.Longitude.value
-    ? `${adapterService.Longitude.value?.slice(
+   `${adapterService.Longitude.value?.slice(
         0,
         2
       )}°${adapterService.Longitude.value?.slice(3, 5)}'`
-    : `0°0'`
 );
 
 const translate = {

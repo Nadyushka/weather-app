@@ -14,7 +14,7 @@
 .loader__wrapper {
   position: fixed;
   width: 100vw;
-  min-height: 100dvh;
+  height: 100dvh;
   text-align: center;
   background-image: linear-gradient(
     to bottom,

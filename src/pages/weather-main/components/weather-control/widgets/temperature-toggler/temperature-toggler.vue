@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {ref, watch} from "vue";
 import {
   TemperatureTypeModel
 } from "./models";
+import {AdapterService} from "@/pages";
+
+const adapterService = AdapterService.getInstance()
 
 /**
  * * Вмды температур
@@ -21,7 +24,10 @@ const activeTemperatureType = ref<'C' | 'F'>( 'C')
  * * Для смены типа температуры
  */
 const changeTemperatureType = (newType: 'C' | 'F') => {
+  if (activeTemperatureType.value == newType) return
+
   activeTemperatureType.value = newType
+  adapterService.TemperatureType = newType
 }
 </script>
 
