@@ -181,7 +181,7 @@ export class AdapterService {
             WeatherDescription: weather.conditions,
             Wind: weather.windspeed,
             Humidity: weather.humidity + '%',
-            WeatherIcon: weather.icon
+            WeatherIcon: '/' + weather.icon + '.svg'
         })
     }
 

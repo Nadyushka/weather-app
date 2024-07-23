@@ -136,9 +136,9 @@ const temperatureType = computed(() => adapterService.TemperatureType)
 
 .forecast__today-weather-circle {
   position: absolute;
-  top: 85px;
+  top: 75px;
   z-index: 10;
-  right: 190px;
+  right: 300px;
 }
 
 .forecast__today-temperature {
@@ -156,6 +156,7 @@ const temperatureType = computed(() => adapterService.TemperatureType)
   z-index: 5;
   width: 163px;
   height: 103px;
+  scale: 3;
 }
 
 .forecast__today-weather {
@@ -200,5 +201,6 @@ const temperatureType = computed(() => adapterService.TemperatureType)
 .forecast__day-of-week-icon {
   width: 68px;
   height: 44px;
+  scale: 1.5;
 }
 </style>
