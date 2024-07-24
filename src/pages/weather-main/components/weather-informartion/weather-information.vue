@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import {
   LocationDate,
-  WeatherInfo,
   WeatherForecast,
   MapLocation,
   DateModel,
   LocationModel,
-  WeatherForecastModel,
   LanguagesEnum
 } from "@/pages";
 import {onBeforeUnmount, onMounted, ref, watch, provide, Ref, computed} from "vue";
@@ -65,6 +63,7 @@ document.addEventListener('set-active-language', setActiveLanguage)
 
 provide<Ref<LanguagesEnum>>('activeLanguage', activeLanguage)
 
+/** Подписка на изменение языка */
 watch(
     () => activeLanguage.value,
     () => {

@@ -92,7 +92,6 @@ const temperatureType = computed(() => adapterService.TemperatureType)
           {{ props.todayForecast.Humidity }}
         </div>
       </div>
-      <CircleSvg class="forecast__today-weather-circle" />
       <img
         :src="props.todayForecast.WeatherIcon"
         alt="weather-icon"
@@ -156,7 +155,7 @@ const temperatureType = computed(() => adapterService.TemperatureType)
   z-index: 5;
   width: 163px;
   height: 103px;
-  scale: 3;
+  scale: 2;
 }
 
 .forecast__today-weather {
@@ -201,6 +200,6 @@ const temperatureType = computed(() => adapterService.TemperatureType)
 .forecast__day-of-week-icon {
   width: 68px;
   height: 44px;
-  scale: 1.5;
+  scale: 1.25;
 }
 </style>

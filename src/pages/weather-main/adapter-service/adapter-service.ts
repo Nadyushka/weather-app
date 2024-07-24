@@ -176,8 +176,8 @@ export class AdapterService {
     /** Приведение к моделе погоды */
     mapResponseToWeatherModel(weather) {
         return new WeatherForecastModel({
-            Temperature: Math.round(weather.temp).toString(),
-            Feelslike: weather.feelslike,
+            Temperature: Math.round(weather.tempmax).toString(),
+            Feelslike: weather.feelslikemax,
             WeatherDescription: weather.conditions,
             Wind: weather.windspeed,
             Humidity: weather.humidity + '%',
