@@ -5,11 +5,25 @@ import {
   WeatherForecastModel,
   LanguagesEnum,
 } from "@/pages";
-import CircleSvg from "@/assets/images/svg/circle.svg";
 import { getLongDayOfWeek } from "@/shared";
 import {AdapterService} from "@/pages";
 
+/** Сервис для уравления данными */
 const adapterService = AdapterService.getInstance()
+
+/**
+ * * Входящие пропсы
+ */
+const props = defineProps({
+  todayForecast: {
+    type: Object as PropType<WeatherForecastModel>,
+    required: true,
+  },
+  futureForecast: {
+    type: Array as PropType<WeatherForecastModel[]>,
+    required: true,
+  },
+});
 
 const translate = {
   Feelslike: {
@@ -38,35 +52,23 @@ const translate = {
   },
 };
 
-/**
- * * Входящие пропсы
- */
-const props = defineProps({
-  todayForecast: {
-    type: Object as PropType<WeatherForecastModel>,
-    required: true,
-  },
-  futureForecast: {
-    type: Array as PropType<WeatherForecastModel[]>,
-    required: true,
-  },
-});
-
-const futureForecastWithDayOfWeek = computed<FutureWeatherForecastModel>(() => {
-  return props.futureForecast.map(
-    (day, idx) =>
-      new FutureWeatherForecastModel({
-        ...day,
-        DayOfWeek: getLongDayOfWeek(activeLanguage.value, idx),
-      })
-  );
-});
-
+/** Переданный язык приложения */
 const language = inject<Ref<LanguagesEnum>>("activeLanguage");
-
+/** Текущий язык приложения */
 const activeLanguage = computed(() => language.value ?? LanguagesEnum.English);
 
-const temperatureType = computed(() => adapterService.TemperatureType)
+/** Выбранный тип температуры */
+const temperatureType = computed<'F' | 'C'>(() => adapterService.TemperatureType)
+/** Прогноз погоды на будущее с длинным названием дня недели */
+const futureForecastWithDayOfWeek = computed<FutureWeatherForecastModel>(() => {
+  return props.futureForecast.map(
+      (day, idx) =>
+          new FutureWeatherForecastModel({
+            ...day,
+            DayOfWeek: getLongDayOfWeek(activeLanguage.value, idx),
+          })
+  );
+});
 </script>
 
 <template>

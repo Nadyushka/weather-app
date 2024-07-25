@@ -2,13 +2,10 @@
 import RefreshSvg from "@/assets/images/svg/refresh.svg"
 import {ref} from "vue";
 
-/**
- * * Активна ли анимация вращения
- */
+/** Активна ли анимация вращения */
 const isSpinAnimationActive = ref(false)
-/**
- * * Tаймер для анимации
- */
+
+/** Tаймер для анимации */
 let spinTimer
 
 /**
@@ -16,7 +13,6 @@ let spinTimer
  * @param value
  */
 const toggleAnimation = (value: boolean) => isSpinAnimationActive.value = value
-
 /**
  * * Переключить фоновую картинку
  */
@@ -28,7 +24,6 @@ const changeBackgroundImage = () => {
   toggleAnimation(true)
   spinTimer = setTimeout(() => toggleAnimation(false),1000)
 }
-
 </script>
 
 <template>

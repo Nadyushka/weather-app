@@ -1,18 +1,21 @@
 <script setup lang="ts">
-
 import { BackgroundChanger, LanguageDropdown, TemperatureToggler, SearchInput, LanguagesEnum }
   from "@/pages";
 import { provide, Ref, ref} from "vue";
 
+/** Язык приложения */
 const activeLanguage = ref<LanguagesEnum>( LanguagesEnum.English)
 
+/** Передаем язык приложения  */
+provide<Ref<LanguagesEnum>>('activeLanguage', activeLanguage)
+
+/** Установить язык приложения */
 const setActiveLanguage = (event: CustomEvent<{ activeLanguage: LanguagesEnum }>) => {
   activeLanguage.value = event.detail.activeLanguage
 }
 
+/** Подписка на изменения языка приложения */
 document.addEventListener('set-active-language', setActiveLanguage)
-
-provide<Ref<LanguagesEnum>>('activeLanguage', activeLanguage)
 </script>
 
 <template>

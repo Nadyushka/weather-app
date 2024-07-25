@@ -12,56 +12,40 @@ import {getCurrentTime, getToday} from "@/shared";
 
 import {AdapterService} from "@/pages";
 
+/** Сервис для уравления данными */
 const adapterService = AdapterService.getInstance()
 
-/**
- * * Текущее время
- */
+/** Текущее время */
 const currentTime = ref<string>()
-/**
- * * Сегодняшний день
- */
+/** Сегодняшний день */
 const today = ref<DateModel>(new DateModel())
-/**
- * * Текущее местополодение пользователя
- */
+/** Язык приложения */
+const activeLanguage = ref<LanguagesEnum>(LanguagesEnum.English)
+
+/** Передаем язык приложения  */
+provide<Ref<LanguagesEnum>>('activeLanguage', activeLanguage)
+
+/** Текущее местоположение пользователя */
 const location = computed(() =>
     new LocationModel({ Country: adapterService.Country.value, City: adapterService.City.value }))
+/** Погода на сегодня */
+const todayForecast = computed( () => adapterService.TodayForecast.value)
+/** Погода на 3 дня вперед */
+const futureForecast = computed( () => adapterService.FutureForecast.value)
 
+/** Таймер для запуска setInterval для времени */
 let timer
 
-/**
- * * После монтирования компонента
- */
+/** После монтирования компонента */
 onMounted(() => {
   getTime()
   today.value = getToday(LanguagesEnum.English)
 
   timer = setInterval(() =>  getTime(), 1000)
 })
-/**
- * * До размонтирования компонента
- */
+/** До размонтирования компонента */
 onBeforeUnmount(() => clearInterval(timer))
 
-/**
- * * Получить актуальное время
- */
-const getTime = () => currentTime.value = getCurrentTime()
-
-const todayForecast = computed( () => adapterService.TodayForecast.value)
-
-const futureForecast = computed( () => adapterService.FutureForecast.value)
-
-const activeLanguage = ref<LanguagesEnum>(LanguagesEnum.English)
-
-const setActiveLanguage = (event: CustomEvent<{ activeLanguage: LanguagesEnum }>) => {
-  activeLanguage.value = event.detail.activeLanguage
-}
-
-document.addEventListener('set-active-language', setActiveLanguage)
-
-provide<Ref<LanguagesEnum>>('activeLanguage', activeLanguage)
 
 /** Подписка на изменение языка */
 watch(
@@ -70,6 +54,17 @@ watch(
       today.value = getToday(activeLanguage.value)
     }
 )
+
+/** Установить язык приложения */
+const setActiveLanguage = (event: CustomEvent<{ activeLanguage: LanguagesEnum }>) => {
+  activeLanguage.value = event.detail.activeLanguage
+}
+
+/** Получить актуальное время */
+const getTime = () => currentTime.value = getCurrentTime()
+
+/** Подписка на изменения языка приложения */
+document.addEventListener('set-active-language', setActiveLanguage)
 </script>
 
 <template>

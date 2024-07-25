@@ -7,28 +7,23 @@ import {
 } from "./models";
 import {AdapterService, LanguagesEnum} from "@/pages";
 
+/** Сервис для уравления данными */
 const adapterService = AdapterService.getInstance()
 
-/**
- * * Варианты выбора в дропдауне
- */
+/** Варианты выбора языка в дропдауне */
 const langOptions:LangOptionModel[]  = [
   new LangOptionModel({Id: 0, Language: LanguagesEnum.English}),
   new LangOptionModel({Id: 1, Language: LanguagesEnum.Russian }),
   new LangOptionModel({Id: 2, Language: LanguagesEnum.Deutsch })
 ]
 
-/**
- * * Видны ли опции для выбора дропдауна
- */
+/** Видны ли опции для выбора дропдауна */
 const isOptionsVisible = ref(false)
-/**
- * * Выбранный язык
- */
+/** Язык приложения */
 const activeLanguage = ref<LanguagesEnum>(LanguagesEnum.English)
 
 /**
- * Выбрать язык
+ * Выбрать язык приложения
  * @param value
  */
 const setActiveLanguage = async (value: LanguagesEnum) => {

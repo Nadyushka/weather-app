@@ -4,7 +4,7 @@ import {
   TemperatureTypeModel
 } from "./models";
 import {AdapterService} from "@/pages";
-
+/** Сервис для уравления данными */
 const adapterService = AdapterService.getInstance()
 
 /**
@@ -15,14 +15,10 @@ const temperatureTypes:TemperatureTypeModel[] = [
     new TemperatureTypeModel ({Type: 'C', ShownType: '°C'})
 ]
 
-/**
- * * Выбранный тип температуры
- */
+/** Выбранный тип температуры */
 const activeTemperatureType = ref<'C' | 'F'>( 'C')
 
-/**
- * * Для смены типа температуры
- */
+/** Для смены типа температуры */
 const changeTemperatureType = (newType: 'C' | 'F') => {
   if (activeTemperatureType.value == newType) return
 

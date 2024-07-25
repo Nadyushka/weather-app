@@ -2,13 +2,16 @@
 import { AdapterService, WeatherControl, WeatherInformation, Loader } from "@/pages";
 import {computed, onBeforeMount, toRefs, watch} from "vue";
 
+/** Сервис для уравления данными */
 const adapterService = AdapterService.getInstance();
 
+/** Индикатор загрузки */
+const isLoading = computed(() => adapterService.IsLoading.value);
+
+/** До монтирования компонента */
 onBeforeMount(async () => {
   await adapterService.getLocation();
 });
-
-const isLoading = computed(() => adapterService.IsLoading.value);
 </script>
 
 <template>

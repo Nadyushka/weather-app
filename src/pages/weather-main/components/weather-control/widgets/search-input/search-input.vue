@@ -4,6 +4,7 @@ import {computed, inject, provide, Ref, ref, watch} from "vue";
 import {AdapterService} from "@/pages";
 import { LanguagesEnum } from "@/pages"
 
+/** Сервис для уравления данными */
 const adapterService = AdapterService.getInstance()
 
 /** Значение города для поиска погоды */
@@ -20,14 +21,19 @@ const translate = {
     en: 'SEARCH',
     ru: 'ИСКАТЬ',
     by: 'ПОШУК',
-	de: 'SUCHEN'
+	  de: 'SUCHEN'
   },
 }
 
+/** Полученный язык приложения */
 const language = inject<Ref<LanguagesEnum>>('activeLanguage')
 
+/** Язык приложения */
 const activeLanguage = computed(() => language.value ?? LanguagesEnum.English)
 
+/**
+ * * Задает название города для поиска погоды
+ */
 const searchCityInfo = async () => {
   adapterService.SearchCity = searchValue.value
   await adapterService.getLocationWithSearchCity(searchValue.value)

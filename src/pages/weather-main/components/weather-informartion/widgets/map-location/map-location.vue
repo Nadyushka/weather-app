@@ -4,23 +4,38 @@ import { computed, inject, nextTick, onMounted, Ref, ref, watch } from "vue";
 import {AdapterService, LanguagesEnum} from "@/pages";
 import {MAP_API} from "../../../../../../../token.local";
 
+/** Сервис для уравления данными */
 const adapterService = AdapterService.getInstance();
 
 const map = ref<mapboxgl.Map | null>(null);
 const marker = ref<mapboxgl.Marker | null>(null);
 
-onMounted(async () => {
-  await nextTick();
-  initMap();
-});
+/** Переданный язык приложения */
+const language = inject<Ref<LanguagesEnum>>("activeLanguage");
+
+/** Язык приложения */
+const activeLanguage = computed(() => language.value ?? LanguagesEnum.English);
+
+/** Широта */
+const shownLatitude = computed(() =>
+    `${adapterService.Latitude.value?.slice(0, 2)}°${adapterService.Latitude.value?.slice(3, 5)}'`
+);
+/** Долгота */
+const shownLongitude = computed(() =>
+    `${adapterService.Longitude.value?.slice(0, 2)}°${adapterService.Longitude.value?.slice(3, 5)}'`
+);
 
 /** Подписка на изменение геоданных для обновления карты */
 watch(
   () => [adapterService.Latitude.value, adapterService.Longitude.value],
-  () => {
-    updateMap();
-  }
+  () => updateMap()
 );
+
+/** После монтирования компонента */
+onMounted(async () => {
+  await nextTick();
+  initMap();
+});
 
 /** Инициализировать карту */
 const initMap = () => {
@@ -57,21 +72,6 @@ const updateMap = () => {
   }
 };
 
-/** Широта */
-const shownLatitude = computed(() =>
-  `${adapterService.Latitude.value?.slice(
-        0,
-        2
-      )}°${adapterService.Latitude.value?.slice(3, 5)}'`
-);
-/** Долгота */
-const shownLongitude = computed(() =>
-   `${adapterService.Longitude.value?.slice(
-        0,
-        2
-      )}°${adapterService.Longitude.value?.slice(3, 5)}'`
-);
-
 const translate = {
   Latitude: {
     en: "Latitude",
@@ -86,9 +86,6 @@ const translate = {
 	 de: "Längengrad"
   },
 };
-
-const language = inject<Ref<LanguagesEnum>>("activeLanguage");
-const activeLanguage = computed(() => language.value ?? LanguagesEnum.English);
 </script>
 
 <template>
