@@ -3,27 +3,13 @@ import MicrophoneSvg from "@/assets/images/svg/microphone-svg.svg"
 import {computed, inject, provide, Ref, ref, watch} from "vue";
 import {AdapterService} from "@/pages";
 import { LanguagesEnum } from "@/pages"
+import {translate} from "@/shared";
 
 /** Сервис для уравления данными */
 const adapterService = AdapterService.getInstance()
 
 /** Значение города для поиска погоды */
 const searchValue = ref<string>()
-
-const translate = {
-  Placeholder: {
-    en: 'Сity search',
-    ru: 'Поиск город',
-    by: 'Пошук горада',
-	 de: 'Stadtsuche'
-  },
-  ButtonText: {
-    en: 'SEARCH',
-    ru: 'ИСКАТЬ',
-    by: 'ПОШУК',
-	  de: 'SUCHEN'
-  },
-}
 
 /** Полученный язык приложения */
 const language = inject<Ref<LanguagesEnum>>('activeLanguage')
@@ -43,10 +29,10 @@ const searchCityInfo = async () => {
 <template>
   <div class="input">
     <div class="input__wrapper">
-      <input v-model="searchValue" class="input__body" :placeholder="translate.Placeholder[activeLanguage]"/>
+      <input v-model="searchValue" class="input__body" :placeholder="translate.SearchValuePlaceholder[activeLanguage]"/>
       <MicrophoneSvg class="input__microphone"/>
     </div>
-    <button class="input__button" @click="searchCityInfo"> {{translate.ButtonText[activeLanguage]}} </button>
+    <button class="input__button" @click="searchCityInfo"> {{translate.SearchValueButtonText[activeLanguage]}} </button>
   </div>
 </template>
 

@@ -7,6 +7,8 @@ const adapterService = AdapterService.getInstance();
 
 /** Индикатор загрузки */
 const isLoading = computed(() => adapterService.IsLoading.value);
+/** Рандомная картинка для фона */
+const backgroundImage = computed(() => adapterService.BackgroundImage.value);
 
 /** До монтирования компонента */
 onBeforeMount(async () => {
@@ -17,7 +19,7 @@ onBeforeMount(async () => {
 <template>
   <Loader v-if="isLoading"/>
 
-  <main class="content">
+  <main class="content" :style="{ backgroundImage: backgroundImage }">
     <div class="content__background_transparent">
       <div class="content__wrapper">
         <weather-control />
@@ -32,7 +34,6 @@ onBeforeMount(async () => {
   width: 100vw;
   min-height: 100dvh;
   height: 100%;
-  background-image: url("@/assets/images/png/app-start-bg.png");
   background-size: cover;
 }
 

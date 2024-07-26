@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import RefreshSvg from "@/assets/images/svg/refresh.svg"
-import {ref} from "vue";
+import {nextTick, onMounted, ref} from "vue";
+import {AdapterService} from "@/pages";
+
+/** Сервис для уравления данными */
+const adapterService = AdapterService.getInstance()
 
 /** Активна ли анимация вращения */
 const isSpinAnimationActive = ref(false)
 
-/** Tаймер для анимации */
-let spinTimer
+onMounted(async () => await adapterService.getRandomImage())
 
 /**
  * Переключатель анимации
@@ -16,13 +19,15 @@ const toggleAnimation = (value: boolean) => isSpinAnimationActive.value = value
 /**
  * * Переключить фоновую картинку
  */
-const changeBackgroundImage = () => {
-  if (spinTimer) {
-    clearTimeout(spinTimer)
-  }
+const changeBackgroundImage = async () => {
+  if (isSpinAnimationActive.value) return
 
-  toggleAnimation(true)
-  spinTimer = setTimeout(() => toggleAnimation(false),1000)
+  try {
+    toggleAnimation(true)
+    await adapterService.getRandomImage()
+  } finally {
+    toggleAnimation(false)
+  }
 }
 </script>
 
@@ -42,23 +47,20 @@ const changeBackgroundImage = () => {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: 0.5s all;
+  transition: transform 1s ease;
 }
 
 .changer:hover {
   background-color: var(--bg-color-hover);
 }
 
-@keyframes rotate360 {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.changer__svg_spin {
+  transform-origin: center center;
+  animation: spin 1s linear infinite;
 }
 
-.changer__svg_spin {
-  animation: rotate360 1s linear infinite;
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 </style>

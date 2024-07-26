@@ -5,7 +5,7 @@ import {
   WeatherForecastModel,
   LanguagesEnum,
 } from "@/pages";
-import { getLongDayOfWeek } from "@/shared";
+import {getLongDayOfWeek, translate} from "@/shared";
 import {AdapterService} from "@/pages";
 
 /** Сервис для уравления данными */
@@ -24,33 +24,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-const translate = {
-  Feelslike: {
-    en: "Feels like",
-    ru: "Ощущается",
-    by: "Адчуваецца",
-    de: "Fühlt sich an wie",
-  },
-  Wind: {
-    en: "Wind",
-    ru: "Ветер",
-    by: "Вецер",
-    de: "Wind",
-  },
-  WindSpeed: {
-    en: "m/s",
-    ru: "м/с",
-    by: "m/s",
-    de: "m/s",
-  },
-  Humidity: {
-    en: "Humidity",
-    ru: "Влажность",
-    by: "Вільготнасць",
-    de: "Feuchtigkeit",
-  },
-};
 
 /** Переданный язык приложения */
 const language = inject<Ref<LanguagesEnum>>("activeLanguage");

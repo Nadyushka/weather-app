@@ -1,6 +1,6 @@
 import {ref} from "vue";
 import {LanguagesEnum, WeatherForecastModel} from '@/pages'
-import {WEATHER_API} from "../../../../token.local";
+import {BACKGROUND_IMAGE_API, WEATHER_API} from "../../../../token.local";
 
 
 export class AdapterService {
@@ -46,6 +46,8 @@ export class AdapterService {
       return this._TemperatureType.value
     }
 
+    /** Картинка фона */
+    BackgroundImage = ref<string>()
     /** Широта */
     Latitude = ref<string>('53.90')
     /** Долгота */
@@ -60,6 +62,9 @@ export class AdapterService {
     TodayForecast  = ref<WeatherForecastModel>( new WeatherForecastModel())
     /** Погода на 3 дня */
     FutureForecast = ref<WeatherForecastModel[]>( [])
+
+    /** Текущая страница для запроса изображения */
+    private CurrentPage = 1
 
     /**
      * * Получить локацию пользователя
@@ -161,6 +166,25 @@ export class AdapterService {
                 Temperature: this.toCelsius(+forecast.Temperature).toString(),
             }
         })
+    }
+
+    async  getRandomImage() {
+           return new Promise(async (resolve) => {
+               setTimeout(async () => {
+                   await fetch(`https://api.pexels.com/v1/search?query=nature&size=medium&per_page=1&page=${this.CurrentPage}`, {
+                       headers: {
+                           'Authorization': BACKGROUND_IMAGE_API
+                       }
+                   })
+                       .then(res => res.json())
+                       .then(res => {
+                           this.BackgroundImage.value = `url(${res.photos[0].src.landscape})`
+                           this.CurrentPage += 1
+                           resolve( this.BackgroundImage.value)
+                       })
+               }, 500)
+
+            })
     }
 
     /** Приведение к Celsius */

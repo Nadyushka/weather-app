@@ -2,7 +2,8 @@
 import mapboxgl from "mapbox-gl";
 import { computed, inject, nextTick, onMounted, Ref, ref, watch } from "vue";
 import {AdapterService, LanguagesEnum} from "@/pages";
-import {MAP_API} from "../../../../../../../token.local";
+import {MAP_API} from "@/../token.local";
+import { translate } from "@/shared";
 
 /** Сервис для уравления данными */
 const adapterService = AdapterService.getInstance();
@@ -72,20 +73,6 @@ const updateMap = () => {
   }
 };
 
-const translate = {
-  Latitude: {
-    en: "Latitude",
-    ru: "Широта",
-    by: "Шырата",
-	 de: "Breitengrad"
-  },
-  Longitude: {
-    en: "Longitude",
-    ru: "Долгота",
-    by: "Даўгата",
-	 de: "Längengrad"
-  },
-};
 </script>
 
 <template>
