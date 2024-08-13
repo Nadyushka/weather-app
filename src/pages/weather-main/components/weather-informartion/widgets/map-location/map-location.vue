@@ -2,7 +2,7 @@
 import mapboxgl from "mapbox-gl";
 import { computed, inject, nextTick, onMounted, Ref, ref, watch } from "vue";
 import {AdapterService, LanguagesEnum} from "@/pages";
-import {MAP_API} from "@/../token.local";
+// import {MAP_API} from "@/../token.local";
 import { translate } from "@/shared";
 
 /** Сервис для уравления данными */
@@ -40,7 +40,7 @@ onMounted(async () => {
 
 /** Инициализировать карту */
 const initMap = () => {
-  mapboxgl.accessToken = location.href.includes('localhost') ? MAP_API :  process.env.MAP_API;
+  mapboxgl.accessToken =  process.env.MAP_API;
   map.value = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/mapbox/streets-v11",
