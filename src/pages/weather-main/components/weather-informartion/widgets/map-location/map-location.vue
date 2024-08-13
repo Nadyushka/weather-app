@@ -40,6 +40,7 @@ onMounted(async () => {
 
 /** Инициализировать карту */
 const initMap = () => {
+  console.log(process.env.MAP_API)
   mapboxgl.accessToken =  process.env.MAP_API;
   map.value = new mapboxgl.Map({
     container: "map",
