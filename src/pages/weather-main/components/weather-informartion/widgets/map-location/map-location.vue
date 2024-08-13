@@ -41,7 +41,7 @@ onMounted(async () => {
 /** Инициализировать карту */
 const initMap = () => {
   console.log(process.env.MAP_API)
-  mapboxgl.accessToken =  process.env.MAP_API;
+  mapboxgl.accessToken =  process.env;
   map.value = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/mapbox/streets-v11",
