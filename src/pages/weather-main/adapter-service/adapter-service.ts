@@ -1,6 +1,6 @@
 import {ref} from "vue";
 import {LanguagesEnum, WeatherForecastModel} from '@/pages'
-// import {BACKGROUND_IMAGE_API, WEATHER_API} from "../../../../token.local";
+import {BACKGROUND_IMAGE_API, WEATHER_API} from "../../../../token.local";
 
 
 export class AdapterService {
@@ -129,7 +129,7 @@ export class AdapterService {
         this.IsLoading.value = true
 
         return new Promise(async(resolve) => {
-            await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${this.City.value}?unitGroup=metric&include=days&key=${process.env.WEATHER_API}&contentType=json&lang=${this._CurrentLanguage.value}`)
+            await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${this.City.value}?unitGroup=metric&include=days&key=${WEATHER_API}&contentType=json&lang=${this._CurrentLanguage.value}`)
                 .then((res) => res.json())
                 .then(async (res) => {
 
@@ -173,7 +173,7 @@ export class AdapterService {
                setTimeout(async () => {
                    await fetch(`https://api.pexels.com/v1/search?query=nature&size=medium&per_page=1&page=${this.CurrentPage}`, {
                        headers: {
-                           'Authorization': process.env.BACKGROUND_IMAGE_API
+                           'Authorization': BACKGROUND_IMAGE_API
                        }
                    })
                        .then(res => res.json())
